@@ -31,9 +31,9 @@ def paint(event):
     global old_x, old_y
     if old_x and old_y:
         canevas.create_line(old_x, old_y, event.x, event.y,
-                            width=15, fill='black',
+                            width=25, fill='black',
                             capstyle=ROUND, smooth=TRUE, splinesteps=36)
-        calque.line((old_x, old_y, event.x, event.y), width=15, fill='black')
+        calque.line((old_x, old_y, event.x, event.y), width=25, fill='black')
     old_x = event.x
     old_y = event.y
 
@@ -46,16 +46,10 @@ def reset(event):
 fenetre = Tk()
 fenetre.title('Reconnaissance')
 
-
 canevas = Canvas(fenetre, bg='white', width=200, height=200)
 canevas.pack()
-
-# Copie de l'image à l'écran via PIL
-# L'image est crée en mémoire
-image = Image.new('L', (200, 200), 'white')
-# Le calque permet de suivre les même étapes que ce qui est fait à l'écran
-calque = ImageDraw.Draw(image)
-
+canevas.bind('<B1-Motion>', paint)
+canevas.bind('<ButtonRelease-1>', reset)
 
 save_button = Button(fenetre, text='Reconnaître', command=reco_canvas)
 save_button.pack(expand=YES, fill=BOTH)
@@ -64,11 +58,15 @@ save_button.pack(expand=YES, fill=BOTH)
 etiquette = Label(fenetre)
 etiquette.pack()
 
-
 clear_button = Button(fenetre, text='Effacer', command=clear_canvas)
 clear_button.pack(expand=YES, fill=BOTH)
 
-canevas.bind('<B1-Motion>', paint)
-canevas.bind('<ButtonRelease-1>', reset)
+
+# Copie de l'image à l'écran via PIL
+# L'image est crée en mémoire
+image = Image.new('L', (200, 200), 'white')
+# Le calque permet de suivre les même étapes que ce qui est fait à l'écran
+calque = ImageDraw.Draw(image)
+
 
 fenetre.mainloop()

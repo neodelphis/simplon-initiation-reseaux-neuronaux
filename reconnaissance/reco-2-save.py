@@ -15,6 +15,7 @@ def save_canvas():
     # Sauvegarde en une image (28, 28)
     image_resized = image.resize((28, 28))
     image_resized.save('image-test.png')
+    # image.save('image-test.png')
 
 
 def paint(event):
